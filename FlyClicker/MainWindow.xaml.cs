@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace FlyClicker
@@ -7,8 +6,8 @@ namespace FlyClicker
     public partial class MainWindow : Window
     {
         private Clicker _clicker;
-        private Key _startHotkey = Key.None;
-        private Key _stopHotkey = Key.None;
+        private String _startHotkey = Key.None.ToString();
+        private String _stopHotkey = Key.None.ToString();
         private bool _settingStartHotkey;
         private bool _settingStopHotkey;
         private SettingsManager _settingsManager;
@@ -33,8 +32,8 @@ namespace FlyClicker
             JitterSlider.Value = _settingsManager.Jitter;
             _startHotkey = _settingsManager.StartHotkey;
             _stopHotkey = _settingsManager.StopHotkey;
-            StartHotkeyBox.Text = _startHotkey.ToString();
-            StopHotkeyBox.Text = _stopHotkey.ToString();
+            StartHotkeyBox.Text = _startHotkey;
+            StopHotkeyBox.Text = _stopHotkey;
         }
 
         private void SaveSettings()
@@ -69,16 +68,35 @@ namespace FlyClicker
             KeyHook.Start();
             KeyHook.KeyAction += KeyHook_KeyAction;
         }
-
-        private void MouseHook_MouseAction(object? sender, MouseEventArgs e)
+        
+        private async void MouseHook_MouseAction(object? sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButton.XButton1 && e.ButtonState == MouseButtonState.Pressed)
+            if (e.ButtonState == MouseButtonState.Pressed)
             {
-                _clicker.Start();
-            }
-            else if (e.Button == MouseButton.XButton2 && e.ButtonState == MouseButtonState.Released)
-            {
-                _clicker.Stop();
+                CheckForIdenticalKeys(e.Button);
+                if (_settingStartHotkey)
+                {
+                    _startHotkey = e.Button.ToString();
+                    StartHotkeyBox.Text = _startHotkey;
+                    _settingStartHotkey = false;
+                }
+                else if (_settingStopHotkey)
+                {
+                    _stopHotkey = e.Button.ToString();
+                    StopHotkeyBox.Text = _stopHotkey;
+                    _settingStopHotkey = false;
+                }
+                else
+                {
+                    if (e.Button.ToString() == _startHotkey)
+                    {
+                        _clicker.Start();
+                    }
+                    else if (e.Button.ToString() == _stopHotkey)
+                    {
+                        await _clicker.StopAsync();
+                    }
+                }
             }
         }
 
@@ -86,25 +104,26 @@ namespace FlyClicker
         {
             if (e.RoutedEvent == Keyboard.KeyDownEvent)
             {
+                CheckForIdenticalKeys(e.Key);
                 if (_settingStartHotkey)
                 {
-                    _startHotkey = e.Key;
-                    StartHotkeyBox.Text = _startHotkey.ToString();
+                    _startHotkey = e.Key.ToString();
+                    StartHotkeyBox.Text = _startHotkey;
                     _settingStartHotkey = false;
                 }
                 else if (_settingStopHotkey)
                 {
-                    _stopHotkey = e.Key;
-                    StopHotkeyBox.Text = _stopHotkey.ToString();
+                    _stopHotkey = e.Key.ToString();
+                    StopHotkeyBox.Text = _stopHotkey;
                     _settingStopHotkey = false;
                 }
                 else
                 {
-                    if (e.Key == _startHotkey)
+                    if (e.Key.ToString() == _startHotkey)
                     {
                         _clicker.Start();
                     }
-                    else if (e.Key == _stopHotkey)
+                    else if (e.Key.ToString() == _stopHotkey)
                     {
                         await _clicker.StopAsync();
                     }
@@ -130,6 +149,26 @@ namespace FlyClicker
             SaveSettings();
             MouseHook.Stop();
             KeyHook.Stop();
+        }
+
+        private async void CheckForIdenticalKeys(object key)
+        {
+            if (_settingStartHotkey || _settingStopHotkey)
+            {
+                return;
+            }
+            String stringKey = key.ToString();
+            if (stringKey == _startHotkey && stringKey == _stopHotkey)
+            {
+                if (_clicker.IsRunning())
+                {
+                    await _clicker.StopAsync();
+                }
+                else
+                {
+                    _clicker.Start();
+                }
+            }
         }
     }
 }

@@ -1,13 +1,10 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using WindowsInput;
 
 public class Clicker
 {
     private CancellationTokenSource _cancellationTokenSource;
     private Task _clickingTask;
-    private readonly InputSimulator _inputSimulator = new InputSimulator();
+    private readonly InputSimulator _inputSimulator = new();
 
     public int Interval { get; set; }
     public int Jitter { get; set; }
@@ -61,5 +58,10 @@ public class Clicker
     public void Stop()
     {
         StopAsync().Wait();
+    }
+
+    public bool IsRunning()
+    {
+        return _clickingTask != null && !_clickingTask.IsCompleted;
     }
 }

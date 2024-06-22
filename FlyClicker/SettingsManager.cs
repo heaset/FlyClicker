@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Input;
@@ -8,8 +7,11 @@ public class SettingsManager
 {
     private readonly string _settingsFilePath;
 
-    public Key StartHotkey { get; set; } = Key.None;
-    public Key StopHotkey { get; set; } = Key.None;
+    [JsonProperty]
+    public String StartHotkey { get; set; } = Key.None.ToString();
+
+    [JsonProperty]
+    public String StopHotkey { get; set; } = Key.None.ToString();
     public int Jitter { get; set; } = 0;
     public int Interval { get; set; } = 100;
 

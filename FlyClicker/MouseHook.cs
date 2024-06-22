@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
@@ -36,7 +35,7 @@ public static class MouseHook
         if (nCode >= 0 && (MouseMessages.WM_XBUTTONDOWN == (MouseMessages)wParam || MouseMessages.WM_XBUTTONUP == (MouseMessages)wParam))
         {
             int mouseButton = (int)(((MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))).mouseData >> 16);
-            if (mouseButton == 1) // XButton1
+            if (mouseButton == 1) //XButton1
             {
                 MouseAction(null, new MouseEventArgs(MouseButton.XButton1, MouseMessages.WM_XBUTTONDOWN == (MouseMessages)wParam ? MouseButtonState.Pressed : MouseButtonState.Released));
             }
