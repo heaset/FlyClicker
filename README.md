@@ -39,6 +39,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Mouse and Keyboard hook implementations: [MouseHook.cs](src/MouseHook.cs), [KeyHook.cs](src/KeyHook.cs) based on examples from MSDN.
-- Input simulation: [Clicker.cs](src/Clicker.cs) using WindowsInput library.
+- Mouse and Keyboard hook implementations: [MouseHook.cs](FlyClicker/MouseHook.cs), [KeyHook.cs](FlyClicker/KeyHook.cs) based on examples from MSDN.
+- Input simulation: [Clicker.cs](FlyClicker/Clicker.cs) using WindowsInput library.
 
