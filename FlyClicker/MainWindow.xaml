@@ -1,12 +1,31 @@
 ﻿<Window x:Class="FlyClicker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FlyClicker"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="FlyClicker" Height="400" Width="400">
     <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="Interval (ms)" Margin="0,0,0,5"/>
+            <Slider x:Name="IntervalSlider" Minimum="10" Maximum="1000" Value="{Binding Interval, Mode=TwoWay}" TickFrequency="10" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
+            <TextBlock Text="{Binding ElementName=IntervalSlider, Path=Value, StringFormat=F0}" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
+            <TextBlock Text="Jitter (ms)" Margin="0,0,0,5"/>
+            <Slider x:Name="JitterSlider" Minimum="0" Maximum="100" Value="{Binding Jitter, Mode=TwoWay}" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
+            <TextBlock Text="{Binding ElementName=JitterSlider, Path=Value, StringFormat=F0}" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <Button Content="Start" Click="StartButton_Click" Margin="0,0,0,10"/>
+            <Button Content="Stop" Click="StopButton_Click" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Hotkeys" FontWeight="Bold" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Start:" Width="50"/>
+                <TextBox x:Name="StartHotkeyBox" Width="100" IsReadOnly="True" Margin="0,0,10,0"/>
+                <Button Content="Set" Click="SetStartHotkey_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="Stop:" Width="50"/>
+                <TextBox x:Name="StopHotkeyBox" Width="100" IsReadOnly="True" Margin="0,0,10,0"/>
+                <Button Content="Set" Click="SetStopHotkey_Click"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
