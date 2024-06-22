@@ -23,7 +23,7 @@
 
 ## Known Issues
 
-- **Cannot assign hotkeys using mouse buttons:** Due to limitations in the current implementation, assigning hotkeys to mouse buttons (e.g., XButton1, XButton2) is not supported.
+- **Cannot assign hotkeys using mouse buttons:** Due to limitations in the current implementation, assigning hotkeys to mouse buttons (e.g., XButton1, XButton2) is not supported. (FIXED)
 
 ## Build
 
