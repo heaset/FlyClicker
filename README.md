@@ -1,6 +1,6 @@
-# AutoClicker
+# FlyClicker
 
-🖱️ AutoClicker is a simple application that automates mouse clicks at specified intervals with jitter and settings saving. It also allows you to set hotkeys to start and stop clicking.
+🖱️ FlyClicker is a simple application that automates mouse clicks at specified intervals with jitter and settings saving. It also allows you to set hotkeys to start and stop clicking.
 
 ## Features
 
