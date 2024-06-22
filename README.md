@@ -13,6 +13,11 @@
 - Windows OS
 - .NET Framework
 
+## Installation
+
+1. Download the latest release from the [Releases](https://github.com/heaset/FlyClicker/releases) page.
+2. Extract the ZIP file to your desired location.
+
 ## Usage
 
 1. Run `FlyClicker.exe`.
